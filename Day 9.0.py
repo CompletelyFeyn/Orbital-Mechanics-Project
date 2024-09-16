@@ -2,6 +2,8 @@ import numpy as np
 import matplotlib.pyplot as plt
 from scipy.integrate import solve_ivp
 
+#This code is to get me familiar with the ODE solver in SciPy
+#The ODE describes SHM with a damping term
 print("Input the initial")
 initial_x = input("position:  ")
 initial_v = input("velocity:  ")
