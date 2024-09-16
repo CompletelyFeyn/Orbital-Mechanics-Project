@@ -1,7 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 from scipy.integrate import solve_ivp
-
+#I a looking at a particle in the potential V(x)=exp(-|x|)
 print("Input the initial")
 initial_x = input("position:  ")
 initial_v = input("velocity:  ")
