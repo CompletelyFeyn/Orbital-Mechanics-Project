@@ -92,15 +92,15 @@ while True:
         dx2dt = v_x2
         dy2dt = v_y2
         if np.sqrt((x2 - x1) ** 2 + (y1 - y2) ** 2) >= r1 + r2:
-            dv_x1dt = -10 * M2 * x1 / (np.sqrt(((x1 - x2) ** 2 + (y1 - y2) ** 2)) ** 3)
-            dv_y1dt = -10 * M2 * y1 / (np.sqrt(((x1 - x2) ** 2 + (y1 - y2) ** 2)) ** 3)
-            dv_x2dt = -10 * M1 * x2 / (np.sqrt(((x1 - x2) ** 2 + (y1 - y2) ** 2)) ** 3)
-            dv_y2dt = -10 * M1 * y2 / (np.sqrt(((x1 - x2) ** 2 + (y1 - y2) ** 2)) ** 3)
+            dv_x1dt = -10 * M2 * (x1-x2) / (np.sqrt(((x1 - x2) ** 2 + (y1 - y2) ** 2)) ** 3)
+            dv_y1dt = -10 * M2 * (y1-y2) / (np.sqrt(((x1 - x2) ** 2 + (y1 - y2) ** 2)) ** 3)
+            dv_x2dt = -10 * M1 * (x2-x1) / (np.sqrt(((x1 - x2) ** 2 + (y1 - y2) ** 2)) ** 3)
+            dv_y2dt = -10 * M1 * (y2-y1) / (np.sqrt(((x1 - x2) ** 2 + (y1 - y2) ** 2)) ** 3)
         elif np.sqrt((x2 - x1) ** 2 + (y1 - y2) ** 2) < r1 + r2:
-            dv_x1dt = 10 ** 18 * x1 / (np.sqrt(((x1 - x2) ** 2 + (y1 - y2) ** 2)) ** 3)
-            dv_y1dt = 10 ** 18 * y1 / (np.sqrt(((x1 - x2) ** 2 + (y1 - y2) ** 2)) ** 3)
-            dv_x2dt = 10 ** 18 * x2 / (np.sqrt(((x1 - x2) ** 2 + (y1 - y2) ** 2)) ** 3)
-            dv_y2dt = 10 ** 18 * y2 / (np.sqrt(((x1 - x2) ** 2 + (y1 - y2) ** 2)) ** 3)
+            dv_x1dt = 10 ** 18 *  (x1-x2)/ (np.sqrt(((x1 - x2) ** 2 + (y1 - y2) ** 2)) ** 3)
+            dv_y1dt = 10 ** 18 * (y1-y2)  / (np.sqrt(((x1 - x2) ** 2 + (y1 - y2) ** 2)) ** 3)
+            dv_x2dt = 10 ** 18 * (x2-x1)/ (np.sqrt(((x1 - x2) ** 2 + (y1 - y2) ** 2)) ** 3)
+            dv_y2dt = 10 ** 18 *  (y2-y1)/ (np.sqrt(((x1 - x2) ** 2 + (y1 - y2) ** 2)) ** 3)
 
         return [dx1dt, dv_x1dt, dy1dt, dv_y1dt, dx2dt, dv_x2dt, dy2dt, dv_y2dt]
 
