@@ -7,10 +7,10 @@ from scipy.integrate import solve_ivp
 from matplotlib.animation import FuncAnimation
 
 #UI is better and it has three bodies
-#I reoved the collision functionality as  couldn't crack scaling the radius with the displayed radius
-#Plus it wasnt very realistic for planets anyway - the next time i will try i'll simulate extended bodies/ fluids
+#I removed the collision functionality as  I couldn't crack scaling the radius with the displayed radius
+#Plus it wasn't very realistic for planets anyway - the next time I will try I'll simulate extended bodies/ fluids
 
-
+#Takes the inputs from the UI and makes them useful
 def gather():
 
     global M1, M2, M3
@@ -46,6 +46,8 @@ def gather():
 
     return [x1_0, v_0_x1, y1_0, v_0_y1, x2_0,v_0_x2, y2_0, v_0_y2,x3_0,v_0_x3, y3_0, v_0_y3]
 
+
+# Defines the three-body ODE
 def newt(t, y):
     x1, v_x1, y1, v_y1, x2, v_x2, y2, v_y2, x3, v_x3, y3, v_y3 = y
     dx1dt = v_x1
@@ -67,6 +69,7 @@ def newt(t, y):
 
     return [dx1dt, dv_x1dt, dy1dt, dv_y1dt, dx2dt, dv_x2dt, dy2dt, dv_y2dt,dx3dt,  dv_x3dt, dy3dt, dv_y3dt]
 
+#Solves ODE and animates
 def simulate():
     t_span = (0, 200)
     t_eval = np.linspace(0, 200, 10000)
@@ -75,21 +78,20 @@ def simulate():
     initial_conditions = gather()
     sol = solve_ivp(newt, t_span, initial_conditions, t_eval=t_eval)
 
-    # Create a figure and axis and set limits according to max positions
+    # Create a figure and axes
     fig, ax = plt.subplots()
-    ax.set_xlim(-50,50)#-max(max(np.abs(sol.y[0])), max(np.abs(sol.y[4]))),
-               # max(max(np.abs(sol.y[0])), max(np.abs(sol.y[4]))))
-    ax.set_ylim(-50,50)#-max(max(np.abs(sol.y[2])), max(np.abs(sol.y[6]))),
-               # max(max(np.abs(sol.y[2])), max(np.abs(sol.y[6]))))
+    ax.set_xlim(-50,50)
+    ax.set_ylim(-50,50)
 
-    # Scale the arkers according to the radius
+    # Scale the markers according to the mass
     size1 = np.ceil(2.5*M1**2/max(max(max(np.abs(sol.y[0])), max(np.abs(sol.y[4]))),max(max(np.abs(sol.y[2])), max(np.abs(sol.y[6])))))
     size2 = np.ceil(2.5*M2**2/max(max(max(np.abs(sol.y[0])), max(np.abs(sol.y[4]))),max(max(np.abs(sol.y[2])), max(np.abs(sol.y[6])))))
-    size3 = np.ceil(2.5 * M2 ** 2 / max(max(max(np.abs(sol.y[0])), max(np.abs(sol.y[4]))),max(max(np.abs(sol.y[2])), max(np.abs(sol.y[6])))))
+    size3 = np.ceil(2.5 * M3 ** 2 / max(max(max(np.abs(sol.y[0])), max(np.abs(sol.y[4]))),max(max(np.abs(sol.y[2])), max(np.abs(sol.y[6])))))
     point1, = ax.plot([], [], 'bo', markersize=size1)
     point2, = ax.plot([], [], 'ro', markersize=size2)
     point3, = ax.plot([], [], 'go', markersize=size3)
-
+    
+    #sets the initial frame
     def init():
         point1.set_data([], [])
         point2.set_data([], [])
@@ -114,13 +116,14 @@ def simulate():
 
     plt.show()
 
-
+#The preset initial conditions
 y0p =[0,1,0,1,-2,1,2,-1,4,4,4,4]
 
 M1p = 5
 M2p = 1
 M3p = 2
 
+#Creates the UI and formats
 root = tk.Tk()
 root.title("Initial conditions:")
 root.geometry("1035x400")
